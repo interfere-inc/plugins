@@ -1,0 +1,25 @@
+{
+  "name": "@interfere/plugins",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt --check",
+    "lint": "oxlint --max-warnings=0 --no-error-on-unmatched-pattern",
+    "lint:fix": "oxlint --fix --max-warnings=0 --no-error-on-unmatched-pattern",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^17.6.0",
+    "oxfmt": "^0.71.0",
+    "oxlint": "^1.86.0"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,mjs,cjs,mts,cts,vue}": "bun run lint:fix",
+    "*": "oxfmt --no-error-on-unmatched-pattern"
+  },
+  "packageManager": "bun@1.4.0"
+}

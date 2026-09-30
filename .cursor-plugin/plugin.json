@@ -1,0 +1,15 @@
+{
+  "name": "interfere",
+  "description": "Investigate errors, sessions, and releases in your Interfere workspace.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Interfere, Inc.",
+    "email": "support@interfere.com"
+  },
+  "homepage": "https://interfere.com",
+  "license": "MIT",
+  "keywords": ["observability", "debugging", "monitoring", "error-tracking"],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "repository": "https://github.com/interfere-inc/plugins"
+}

@@ -1,0 +1,30 @@
+{
+  "name": "interfere",
+  "description": "Investigate errors, sessions, and releases in your Interfere workspace.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Interfere, Inc.",
+    "email": "support@interfere.com"
+  },
+  "homepage": "https://interfere.com",
+  "license": "MIT",
+  "keywords": ["observability", "debugging", "monitoring", "error-tracking"],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Interfere",
+    "shortDescription": "Investigate production issues",
+    "longDescription": "Investigate errors, sessions, and releases in your Interfere workspace. Connect your account to inspect evidence and make the changes you request within your existing permissions.",
+    "developerName": "Interfere, Inc.",
+    "category": "Developer tools",
+    "capabilities": ["Read", "Write"],
+    "websiteURL": "https://interfere.com",
+    "privacyPolicyURL": "https://interfere.com/legal/privacy-policy",
+    "termsOfServiceURL": "https://interfere.com/legal/terms-of-service",
+    "defaultPrompt": [
+      "Investigate recent errors in my Interfere workspace.",
+      "Help me trace this problem to its release and supporting evidence."
+    ]
+  },
+  "repository": "https://github.com/interfere-inc/plugins"
+}

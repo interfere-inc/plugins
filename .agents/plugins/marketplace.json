@@ -1,0 +1,20 @@
+{
+  "name": "interfere-plugin-marketplace",
+  "interface": {
+    "displayName": "Interfere"
+  },
+  "plugins": [
+    {
+      "name": "interfere",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer tools"
+    }
+  ]
+}

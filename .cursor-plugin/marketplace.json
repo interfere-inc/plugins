@@ -1,0 +1,17 @@
+{
+  "name": "interfere-plugin-marketplace",
+  "owner": {
+    "name": "Interfere",
+    "email": "support@interfere.com"
+  },
+  "plugins": [
+    {
+      "name": "interfere",
+      "source": "./",
+      "description": "Investigate errors, sessions, and releases in your Interfere workspace."
+    }
+  ],
+  "metadata": {
+    "description": "Interfere tools and skills for investigating production issues."
+  }
+}

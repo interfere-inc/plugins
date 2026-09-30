@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "interfere": {
+      "type": "http",
+      "url": "https://mcp.interfere.com/mcp"
+    }
+  }
+}
