@@ -1,7 +1,7 @@
 {
   "name": "interfere",
   "description": "Investigate errors, sessions, and releases in your Interfere workspace.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": {
     "name": "Interfere, Inc.",
     "email": "support@interfere.com"
@@ -12,9 +12,5 @@
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",
   "repository": "https://github.com/interfere-inc/plugins",
-  "icon": "./assets/icon.png",
-  "privacyPolicyUrl": "https://interfere.com/legal/privacy-policy",
-  "supportUrl": "https://github.com/interfere-inc/plugins/issues",
-  "termsOfServiceUrl": "https://interfere.com/legal/terms-of-service",
-  "documentationUrl": "https://github.com/interfere-inc/plugins#readme"
+  "logo": "./assets/icon.png"
 }

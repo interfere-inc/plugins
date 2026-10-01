@@ -7,7 +7,7 @@
   "plugins": [
     {
       "name": "interfere",
-      "source": "./",
+      "source": "./plugins/interfere",
       "description": "Investigate errors, sessions, and releases in your Interfere workspace."
     }
   ],

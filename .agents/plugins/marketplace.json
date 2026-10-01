@@ -8,7 +8,7 @@
       "name": "interfere",
       "source": {
         "source": "local",
-        "path": "./"
+        "path": "./plugins/interfere"
       },
       "policy": {
         "installation": "AVAILABLE",

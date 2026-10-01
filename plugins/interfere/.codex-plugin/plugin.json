@@ -1,7 +1,7 @@
 {
   "name": "interfere",
   "description": "Investigate errors, sessions, and releases in your Interfere workspace.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": {
     "name": "Interfere, Inc.",
     "email": "support@interfere.com"

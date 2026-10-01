@@ -1,60 +1,24 @@
-# Interfere plugin
+# Interfere plugins
 
-Investigate production errors, sessions, and releases from Claude Code, Cursor, or Codex. The plugin connects to `https://mcp.interfere.com/mcp` and includes an investigation skill.
+Investigate production errors, sessions, and releases from Claude Code, Cursor, or Codex using the Interfere MCP server.
 
-An Interfere account with access to the relevant workspace is required. Sign in through your client's connection flow and choose your workspace. Access follows your existing permissions. The connection can read data and perform changes you request; it is not read-only. No API key belongs in these files.
+See the [Interfere plugin](plugins/interfere/README.md) for installation, authentication, and usage.
 
-## Install
+## Repository layout
 
-This repository contains the plugin files directly. Using the plugin requires no dependency installation or build step.
+The installable plugin lives in `plugins/interfere`. It contains the client manifests, MCP configuration, investigation skill, icon, README, and license. It has no package manifest, lockfile, or build step.
 
-### Claude Code
+The repository root contains the marketplace catalogs and development tools. All three catalogs point to `plugins/interfere`.
 
-Add the marketplace, then install the plugin:
+## Publishing
 
-```text
-/plugin marketplace add interfere-inc/plugins
-/plugin install interfere@interfere-plugin-marketplace
-```
+For the Claude directory, use repository `interfere-inc/plugins`, branch `main`, and plugin path `plugins/interfere`.
 
-Open `/mcp` to connect your Interfere account.
-
-### Cursor
-
-Clone the repository into your local plugins directory:
-
-```sh
-git clone https://github.com/interfere-inc/plugins.git ~/.cursor/plugins/local/interfere
-```
-
-Reload Cursor and open Customize to connect the Interfere MCP server. Managed installations may require your administrator to allow local plugin imports.
-
-### Codex
-
-Register the marketplace and install its plugin:
-
-```sh
-codex plugin marketplace add https://github.com/interfere-inc/plugins.git
-codex plugin add interfere@interfere-plugin-marketplace
-```
-
-Restart your session and complete the Interfere connection flow when prompted. The package also includes marketplace metadata for supported Codex desktop clients.
-
-## Use Interfere
-
-Try asking:
-
-- "Investigate recent errors in my Interfere workspace."
-- "Trace this problem to its release and supporting evidence."
-- "Find the sessions affected by this problem."
-
-The server exposes `search` to discover available operations and `execute` to call them. The bundled skill helps the agent select the workspace, inspect the current API contract, and distinguish evidence from hypotheses. It does not automatically resolve problems or change settings during an investigation.
-
-If sign-in fails, reconnect through your client. A permission error requires the relevant workspace access; retrying with another endpoint will not grant it.
-
-For help, contact [Interfere support](mailto:support@interfere.com). See our [privacy policy](https://interfere.com/legal/privacy-policy) and [terms of service](https://interfere.com/legal/terms-of-service).
+For Cursor, submit the repository URL. Its root `.cursor-plugin/marketplace.json` points to the plugin subdirectory. The listing logo is at `https://raw.githubusercontent.com/interfere-inc/plugins/main/plugins/interfere/assets/icon.png`.
 
 ## Development
+
+Run these commands from the repository root.
 
 Install [Bun](https://bun.sh), then run:
 
