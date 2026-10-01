@@ -1,7 +1,7 @@
 {
   "name": "interfere",
   "description": "Investigate errors, sessions, and releases in your Interfere workspace.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": {
     "name": "Interfere, Inc.",
     "email": "support@interfere.com"
@@ -16,7 +16,7 @@
     "shortDescription": "Investigate production issues",
     "longDescription": "Investigate errors, sessions, and releases in your Interfere workspace. Connect your account to inspect evidence and make the changes you request within your existing permissions.",
     "developerName": "Interfere, Inc.",
-    "category": "Developer tools",
+    "category": "Developer Tools",
     "capabilities": ["Read", "Write"],
     "websiteURL": "https://interfere.com",
     "privacyPolicyURL": "https://interfere.com/legal/privacy-policy",
@@ -24,7 +24,10 @@
     "defaultPrompt": [
       "Investigate recent errors in my Interfere workspace.",
       "Help me trace this problem to its release and supporting evidence."
-    ]
+    ],
+    "supportURL": "https://github.com/interfere-inc/plugins/issues",
+    "logo": "./assets/icon.png",
+    "composerIcon": "./assets/icon.png"
   },
   "repository": "https://github.com/interfere-inc/plugins"
 }
