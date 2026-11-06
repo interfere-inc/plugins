@@ -1,6 +1,6 @@
 # Interfere plugin
 
-Investigate production errors, sessions, and releases from Claude Code, Cursor, or Codex. The plugin connects to `https://mcp.interfere.com/mcp` and includes an investigation skill.
+Investigate production errors, sessions, and releases from Claude Code, Cursor, or Codex. The plugin connects to `https://mcp.interfere.com/mcp` and includes a setup skill and an investigation skill.
 
 An Interfere account with access to the relevant workspace is required. Sign in through your client's connection flow and choose your workspace. Access follows your existing permissions. The connection can read data and perform changes you request; it is not read-only. No API key belongs in these files.
 
@@ -42,6 +42,12 @@ codex plugin add interfere@interfere-plugin-marketplace
 
 Restart your session and complete the Interfere connection flow when prompted. The package also includes marketplace metadata for supported Codex desktop clients.
 
+## Set up a project
+
+Run the setup skill in the project you want to monitor: `/interfere:setup` in Claude Code, or pick `setup` from the skill picker in Codex and Cursor. You can also ask "Set up Interfere in this project."
+
+The skill creates the app, installs the SDK, and links GitHub and the deployment platform. You approve the GitHub and platform access in your browser. If the project already exports OpenTelemetry, the skill also sends that data to Interfere.
+
 ## Use Interfere
 
 Try asking:
@@ -50,7 +56,7 @@ Try asking:
 - "Trace this problem to its release and supporting evidence."
 - "Find the sessions affected by this problem."
 
-The server exposes `search` to discover available operations and `execute` to call them. The bundled skill helps the agent select the workspace, inspect the current API contract, and distinguish evidence from hypotheses. It does not automatically resolve problems or change settings during an investigation.
+The server exposes `search` to discover available operations and `execute` to call them. The investigation skill helps the agent select the workspace, inspect the current API contract, and distinguish evidence from hypotheses. It does not automatically resolve problems or change settings during an investigation.
 
 If sign-in fails, reconnect through your client. A permission error requires the relevant workspace access; retrying with another endpoint will not grant it.
 

@@ -6,7 +6,7 @@ See the [Interfere plugin](plugins/interfere/README.md) for installation, authen
 
 ## Repository layout
 
-The installable plugin lives in `plugins/interfere`. It contains the client manifests, MCP configuration, investigation skill, icon, README, and license. It has no package manifest, lockfile, or build step.
+The installable plugin lives in `plugins/interfere`. It contains the client manifests, MCP configuration, setup and investigation skills, icon, README, and license. It has no package manifest, lockfile, or build step.
 
 The repository root contains the marketplace catalogs and development tools. All three catalogs point to `plugins/interfere`.
 
