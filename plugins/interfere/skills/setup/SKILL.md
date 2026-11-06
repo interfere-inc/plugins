@@ -26,7 +26,6 @@ Do not retry a write after a timeout or an unclear result. Read the current stat
 - Before you reuse an Interfere key found in the environment, `.env` files or CI secrets, check it with `validateKey`. Reuse it only if the outcome is `valid`. Otherwise use the keys from `createSurface`, or create keys for the app.
 - Store keys in the place the project already uses for secrets. Never commit a secret key. Give only the public key a browser prefix such as `VITE_`.
 - The build needs the same keys where it runs in CI and on the deployment platform, not only in local files. You cannot set those values. List each variable that the user must add there, with its name and where it goes, but not the secret value.
-- The guide for the app's SDK and the OpenTelemetry guide both use the name `INTERFERE_API_KEY`, for different keys. If one environment needs both an app secret key and a workspace telemetry key, stop and ask the user how to name them.
 
 ## 3. Connect GitHub and the deployment platform
 
@@ -37,10 +36,11 @@ Do not retry a write after a timeout or an unclear result. Read the current stat
 
 ## 4. Send existing OpenTelemetry data
 
-Skip this step if the project does not export OpenTelemetry.
+Use this step for a backend service, an OpenTelemetry Collector, or a project that already exports OpenTelemetry. Skip it if the project exports no OpenTelemetry data.
 
 - Follow https://interfere.com/docs/sdk/otel-ingestion#export-directly-from-a-service, or the Collector section of the same page if the project exports through a Collector.
-- Reuse a workspace key only if `validateKey` accepts it. Otherwise create a workspace key with `keys_private_create`, without a `surfaceSlug` and with the `org:telemetry:write` scope. Store it as `INTERFERE_API_KEY` in the server environment, unless step 2 found a conflict. Never commit it.
+- This step uses a workspace telemetry key, which is different from the secret key of an app. Name its variable `INTERFERE_TELEMETRY_KEY`, so that it does not replace the `INTERFERE_API_KEY` of an app. The guide uses `INTERFERE_API_KEY`, so use `INTERFERE_TELEMETRY_KEY` in its place in the exporter header, for example `Authorization=Bearer%20${INTERFERE_TELEMETRY_KEY}`, or `${env:INTERFERE_TELEMETRY_KEY}` in a Collector configuration.
+- Reuse a workspace key only if `validateKey` accepts it. Otherwise create a workspace key with `keys_private_create`, without a `surfaceSlug` and with the `org:telemetry:write` scope. Store it as `INTERFERE_TELEMETRY_KEY` in the environment of the service or the Collector. Never commit it.
 - Add Interfere as one more OTLP exporter. Keep the existing exporters. Do not add an exporter to a service that the Interfere SDK already covers, because each span then arrives twice.
 - Once `serviceActivity` shows spans from a service, link the service to its repository with `setServiceSource`.
 
