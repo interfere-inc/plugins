@@ -1,7 +1,7 @@
 {
   "name": "interfere",
   "description": "Investigate errors, sessions, and releases in your Interfere workspace.",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "author": {
     "name": "Interfere, Inc.",
     "email": "support@interfere.com"
@@ -29,5 +29,64 @@
     "logo": "./assets/icon.png",
     "composerIcon": "./assets/icon.png"
   },
-  "repository": "https://github.com/interfere-inc/plugins"
+  "repository": "https://github.com/interfere-inc/plugins",
+  "extensions": {
+    "com.openai": {
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Ranks the open problems in the connected Company by urgency",
+              "prompt": "What are the most urgent open problems in my Interfere workspace right now?",
+              "tools_triggered": "search, execute",
+              "expected_behavior": "Reads the Resonance demo Company and ranks open problems by status, recent occurrences and affected users: #1 Autosave reports saved while discarding notes (Needs attention, recent occurrences), then #24 Concurrent registrations oversell sessions (405 affected users), #4 Campaign retries double delivery (214) and #8 Valid invitations fail on acceptance (148), each with its cause."
+            },
+            {
+              "description": "Investigates one problem and explains its cause from recorded evidence",
+              "prompt": "Investigate PRB-24 in Interfere and explain what is causing it.",
+              "tools_triggered": "search, execute",
+              "expected_behavior": "Fetches PRB-24 and its evidence and explains the race condition: ensureCapacity in apps/web/lib/workshops/bookings.ts returns before lockWorkshop, so concurrent registrations booked six seats for a session with capacity three (CapacityInvariantViolation in the cited trace). Recommends taking the lock before reading availability."
+            },
+            {
+              "description": "Reports the users and sessions affected by a problem",
+              "prompt": "Which users were affected by the invitation acceptance failure in Interfere, and how many sessions hit it?",
+              "tools_triggered": "search, execute",
+              "expected_behavior": "Finds Valid invitation fails on acceptance (PRB-8) and reports 148 affected users across 148 sessions (one each), listing the demo users (firstname.surname@example.com) and noting that counts come from retained history."
+            },
+            {
+              "description": "Explains which problems are in recovery and the fix recorded for each",
+              "prompt": "Which problems in my Interfere workspace are in recovery, and what changed to fix them?",
+              "tools_triggered": "search, execute",
+              "expected_behavior": "Lists the three In recovery problems: #5 Large uploads stuck in Processing (67 users, fixed preview buffer overflow), #13 Bulk assignment updates one page (326 users, paginated query) and #23 Accounting sync retries invalid credentials (61 users, 401 treated as retryable), with the suggested fix recorded for each."
+            },
+            {
+              "description": "Answers a setup question from Interfere documentation",
+              "prompt": "How do I install the Interfere SDK in a Next.js app?",
+              "tools_triggered": "docs__search_interfere, docs__query_docs_filesystem_interfere",
+              "expected_behavior": "Searches the Interfere docs and returns the Next.js guide (interfere.com/docs/sdk/next-js): Next.js 16+ with App Router, npm install @interfere/next, INTERFERE_PUBLIC_KEY and INTERFERE_API_KEY in the environment, and wrapping next.config with withInterfere."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Dashboard question for a different observability tool",
+              "prompt": "Explain how to build a Grafana dashboard that shows CPU usage per pod."
+            },
+            {
+              "description": "General scripting request about logs, with no Interfere data involved",
+              "prompt": "Write a Python script that tails a log file and prints lines containing ERROR."
+            },
+            {
+              "description": "General observability concept question",
+              "prompt": "What is the difference between logs, metrics and traces?"
+            }
+          ]
+        },
+        "commerce": false,
+        "commerce_description": "Interfere does not sell products or process payments in ChatGPT or Codex."
+      },
+      "publication": {
+        "release_notes": "First release: investigate production problems, sessions and releases in your Interfere Company, and set up Interfere in a project."
+      }
+    }
+  }
 }
