@@ -17,13 +17,18 @@ Do not retry a write after a timeout or an unclear result. Read the current stat
 - Read the project to find the framework, the package manager and where each part deploys.
 - In a monorepo, ask which packages to set up. Create one app for each deployed frontend.
 - A backend service without a browser SDK, or a service in another language, needs no app. Set it up through step 4 only.
-- Call `surfaces_list`. If an app already matches a package, use it. Otherwise create one with `createSurface`, with the name and framework of that package and an API key with the `release:write` scope.
-- `createSurface` returns the secret key and the public key. Store both at once, as step 2 describes. Nothing returns the secret key again later.
+- Call `surfaces_list`. If an app already matches a package, use it. Otherwise create one with `createSurface`, with the name and framework of that package.
+- `createSurface` returns the public key of the app. Store it at once, as step 2 describes. The secret key comes from step 2, not from the app.
 
 ## 2. Install the SDK
 
 - Follow the setup guide for the framework at https://interfere.com/docs. For example, a Vite and React app uses https://interfere.com/docs/sdk/vite.
-- Before you reuse an Interfere key found in the environment, `.env` files or CI secrets, check it with `validateKey`. Reuse it only if the outcome is `valid`. Otherwise use the keys from `createSurface`, or create keys for the app.
+- Before you reuse an Interfere key found in the environment, `.env` files or CI secrets, check it with `validateKey`. Reuse it only if the outcome is `valid`.
+- The build needs a workspace secret key with the `release:write` scope, stored as `INTERFERE_API_KEY`. One key publishes releases for every app in the workspace. Do not create a key for an app.
+- If the project has no valid secret key, list the workspace keys with `keys_private_list`. Skip any row with a `surfaceId`: it is a legacy app key, not a workspace key. Read the scopes of each key with `keys_private_get`. Show the user the name, the last 4 characters and the scopes of each key, then ask the user to choose:
+  - **Use an existing key.** Interfere shows a secret only when the key is created, so the user adds it to `.env.local` or to the project's secret manager. Never ask the user to paste a secret into the chat. When the user confirms, check the key with `validateKey`.
+  - **Create a key for this project.** Call `keys_private_create` without a `surfaceSlug`, with the `release:write` scope only. Name the key after the project and where it builds, for example `my-app (Vercel build)`. Write the returned secret straight into the project's secret store as `INTERFERE_API_KEY`, and do not show it.
+- Recommend a new key when every listed key has more scopes than `release:write`. The build secret goes to CI and to the deployment platform, and a broader key there can change members, billing and other keys.
 - Store keys in the place the project already uses for secrets. Never commit a secret key. Give only the public key a browser prefix such as `VITE_`.
 - The build needs the same keys where it runs in CI and on the deployment platform, not only in local files. You cannot set those values. List each variable that the user must add there, with its name and where it goes, but not the secret value.
 
