@@ -49,7 +49,18 @@ Use this step for a backend service, an OpenTelemetry Collector, or a project th
 - Add Interfere as one more OTLP exporter. Keep the existing exporters. Do not add an exporter to a service that the Interfere SDK already covers, because each span then arrives twice.
 - Once `serviceActivity` shows spans from a service, link the service to its repository with `setServiceSource`.
 
-## 5. Finish
+## 5. Identify signed-in users (optional)
+
+Use this step only if the app has signed-in users, for example an auth library such as Clerk, Auth0 or WorkOS, or code that loads the current user. Skip it otherwise.
+
+- Ask the user whether to link sessions to signed-in users. Tell the user that this fills the Users and Companies pages and shows which users each problem affects.
+- If the user agrees, follow https://interfere.com/docs/sdk/identity. Call `identity.set()` where the app already loads the signed-in user, and `identity.clear()` when the user signs out.
+- Set `identifier` to a stable internal user ID, never an email. With Clerk, use the Clerk user ID, which starts with `user_`.
+- Set `source.type` to `clerk`, `auth0` or `workos` to match the auth library. For any other library, use `custom` with the name of the library.
+- Send only `identifier` and `source` by default. Ask the user before you add `name`, `email` or `avatar`, because they are personal data about the app's users.
+- Add `company.tier` only if the app already stores a plan or tier for each account, and ask the user which field to use.
+
+## 6. Finish
 
 - Run the project's build or tests if they are quick, so the SDK change compiles.
 - Tell the user what you changed, which steps still need them, and how to send a first test event.
