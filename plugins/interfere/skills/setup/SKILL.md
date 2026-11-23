@@ -49,21 +49,26 @@ Use this step for a backend service, an OpenTelemetry Collector, or a project th
 - Add Interfere as one more OTLP exporter. Keep the existing exporters. Do not add an exporter to a service that the Interfere SDK already covers, because each span then arrives twice.
 - Once `serviceActivity` shows spans from a service, link the service to its repository with `setServiceSource`.
 
-## 5. Identify signed-in users (optional)
+## 5. Identify signed-in users and settle consent (optional)
 
 Use this step only if the app has signed-in users, for example an auth library such as Clerk, Auth0 or WorkOS, or code that loads the current user. Skip it otherwise.
 
-- Ask the user whether to link sessions to signed-in users. Tell the user that this fills the Users and Companies pages and shows which users each problem affects.
-- If the user agrees, follow https://interfere.com/docs/sdk/identity. Call `identity.set()` where the app already loads the signed-in user, and `identity.clear()` when the user signs out.
+- Tell the user that identity fills the Users and Companies pages and shows which users each problem affects.
+- Before you write code, ask the user one question that settles identity, consent and replay together. Do not split it into later follow-ups. Each later addition changes what the app's users agreed to, and the app must then ask them again.
+  - Fields: which of `identifier`, `name`, `email`, `avatar`, `company`, `company.tier` and role to send. Read the app first and offer only the fields that it already stores. `name`, `email` and `avatar` are personal data about the app's users.
+  - Consent: whether diagnostics, identity and replay are on by default, asked once, or opt-in. If the app serves the UK or the EU, ask for each region. Use the app's existing consent or cookie mechanism if it has one.
+  - Replay: on or off, and which routes stay unrecorded.
+- Implement every agreed field, the consent choice and the replay setting in one change. Follow https://interfere.com/docs/sdk/identity, https://interfere.com/docs/sdk/consent and https://interfere.com/docs/sdk/replay-privacy.
+- Store each user's consent choice with the list of fields that it covers. A later field change then asks again only when that list changes.
+- Call `identity.set()` where the app already loads the signed-in user, and `identity.clear()` when the user signs out.
 - Set `identifier` to a stable internal user ID, never an email. With Clerk, use the Clerk user ID, which starts with `user_`.
 - Set `source.type` to `clerk`, `auth0` or `workos` to match the auth library. For any other library, use `custom` with the name of the library.
-- Send only `identifier` and `source` by default. Ask the user before you add `name`, `email` or `avatar`, because they are personal data about the app's users.
-- Add `company.tier` only if the app already stores a plan or tier for each account, and ask the user which field to use.
+- Map `company.tier` only from a plan or tier that the app already stores for each account. Ask the user which field to use.
 
 ## 6. Finish
 
 - Run the project's build or tests if they are quick, so the SDK change compiles.
 - Tell the user what you changed, which steps still need them, and how to send a first test event.
 - After the user sends a test event, check `surfaceActivity` and tell the user whether the event arrived.
-- Point the user to the consent guide (https://interfere.com/docs/sdk/consent) and the replay masking guide (https://interfere.com/docs/sdk/replay-privacy). Do not change those settings yourself.
+- List the identity fields, the consent defaults and the replay settings that the change applies, so that the user can review them in one place.
 - Do not change unrelated code, commit, or deploy unless the user asks.
